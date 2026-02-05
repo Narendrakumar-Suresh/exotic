@@ -13,11 +13,10 @@ enum class TypeKind {
     List
 };
 
-
 struct Type{
     TypeKind kind;
     Type* element = nullptr;
-}
+};
 
 inline Type i32Type(){ return {TypeKind::I32}; }
 inline Type i64Type(){ return {TypeKind::I64}; }

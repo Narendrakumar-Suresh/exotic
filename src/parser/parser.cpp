@@ -15,7 +15,7 @@ void Parser::advance() {
 
 void Parser::expect(TokenKind kind) {
     if (current.kind != kind) {
-        cerr << "Parse error\n";
+        cerr << "Parse error: expected different token\n";
         exit(1);
     }
     advance();
@@ -38,14 +38,13 @@ LetStmt Parser::parseLet() {
     return { name, expr };
 }
 
-
 Expr Parser::parseExpr(){
-    int value=0;
+    int value = 0;
 
     if (current.kind == TokenKind::Number) {
         value = stoi(current.text);
         advance();
-    }else if(current.kind == TokenKind::Identifier){
+    } else if(current.kind == TokenKind::Identifier){
         value = symbols.get(current.text);
         advance();
     } 
@@ -65,7 +64,10 @@ Expr Parser::parseExpr(){
         value += rhs;
     }
 
-    return {value};
+    Expr result;
+    result.value = value;
+    result.type = i32Type();
+    return result;
 }
 
 vector<LetStmt> Parser::parseProgram() {
@@ -82,16 +84,16 @@ Type Parser::parseType() {
     string t = current.text;
     expect(TokenKind::Identifier);
 
-    if (t == "i32") return I32();
-    if (t == "i64") return I64();
-    if (t == "f64") return F64();
-    if (t == "string") return String();
+    if (t == "i32") return i32Type();
+    if (t == "i64") return i64Type();
+    if (t == "f64") return f64Type();
+    if (t == "string") return stringType();
 
     if (t == "list") {
         expect(TokenKind::LBracket);
         Type elem = parseType();
         expect(TokenKind::RBracket);
-        return List(new Type(elem));
+        return listType(new Type(elem));
     }
 
     cerr << "Unknown type\n";

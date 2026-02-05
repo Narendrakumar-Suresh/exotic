@@ -44,17 +44,17 @@ Token Lexer::nextToken(){
     }
 
     if (std::isalpha(c)) {
-            std::string value;
-            while (std::isalnum(peek())) {
-                value += advance();
-            }
-
-            if (value == "let") {
-                return { TokenKind::KeywordLet, value };
-            }
-
-            return { TokenKind::Identifier, value };
+        std::string value;
+        while (std::isalnum(peek())) {
+            value += advance();
         }
+
+        if (value == "let") {
+            return { TokenKind::KeywordLet, value };
+        }
+
+        return { TokenKind::Identifier, value };
+    }
 
     advance();
     switch (c) {
@@ -66,6 +66,8 @@ Token Lexer::nextToken(){
     case ';': return { TokenKind::Semicolon, ";" };
     case '(': return { TokenKind::LParen, "(" };
     case ')': return { TokenKind::RParen, ")" };
+    case '[': return { TokenKind::LBracket, "[" };
+    case ']': return { TokenKind::RBracket, "]" };
     default:
         return { TokenKind::Unknown, std::string(1, c) };
     }

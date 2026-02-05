@@ -3,25 +3,32 @@
 
 #include <string>
 #include <unordered_map>
+#include "types.h"
 using namespace std;
 
 struct Symbol{
     string name;
+    Type type;
     int int_value;
     double double_value;
     string string_value;
-}
+};
 
 class SymbolTable {
-    public:
+public:
     void set(const string& name, int value){
-        table[name] = value;
+        Symbol sym;
+        sym.name = name;
+        sym.int_value = value;
+        sym.type = i32Type();
+        table[name] = sym;
     }
-    int get (const string& name){
-        return table[name];
+    
+    int get(const string& name){
+        return table[name].int_value;
     }
 
-    private:
+private:
     std::unordered_map<string, Symbol> table;
 };
 

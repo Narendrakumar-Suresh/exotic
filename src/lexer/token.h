@@ -15,6 +15,8 @@ enum class TokenKind {
     Semicolon,
     LParen,
     RParen,
+    LBracket,
+    RBracket,
     EndOfFile,
     Unknown
 };
