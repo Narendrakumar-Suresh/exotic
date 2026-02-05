@@ -12,24 +12,31 @@ struct Symbol{
     int int_value;
     double double_value;
     string string_value;
+    vector<Symbol> list_values;
 };
 
 class SymbolTable {
 public:
-    void set(const string& name, int value){
-        Symbol sym;
-        sym.name = name;
-        sym.int_value = value;
-        sym.type = i32Type();
+    void set(const string& name, const Symbol& sym){
         table[name] = sym;
     }
     
-    int get(const string& name){
-        return table[name].int_value;
+    Symbol get(const string& name){
+        if (table.find(name) == table.end()) {
+            Symbol empty;
+            empty.type = i32Type();
+            empty.int_value = 0;
+            return empty;
+        }
+        return table[name];
+    }
+    
+    bool exists(const string& name){
+        return table.find(name) != table.end();
     }
 
 private:
-    std::unordered_map<string, Symbol> table;
+    unordered_map<string, Symbol> table;
 };
 
 #endif

@@ -1,0 +1,23 @@
+# CMake
+/build/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Compiled Object files
+*.o
+*.d
+
+# Executables
+glc
+
+# Editor-specific files
+.vscode/
+.idea/
+
+# Other temporary files
+*~
+*.bak
+*.swp
+*.swo
